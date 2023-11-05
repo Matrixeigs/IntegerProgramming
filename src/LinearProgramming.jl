@@ -7,7 +7,7 @@ subject to  x + 2 y + 3 z >= 4
 
 
 using Gurobi
-
+ENV["JULIA_NUM_THREADS"]
 # initialize model
 env_p = Ref{Ptr{Cvoid}}()
 error = GRBloadenv(env_p, "qp.log")
