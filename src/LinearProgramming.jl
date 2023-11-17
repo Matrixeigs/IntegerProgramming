@@ -5,6 +5,18 @@ subject to  x + 2 y + 3 z >= 4
             x, y, z non-negative
 =#
 
+function linear_programming(c::Vector, A::Matrix, b::Vector, lb::Vector, ub::Vector)
+  # A linear programming wrapper to call Gurobi
+  env_p = Ref{Ptr{Cvoid}}()
+  error = GRBloadenv(env_p, "lp.log")
+  env = env_p[]
+  model_p = Ref{Ptr{Cvoid}}()
+  error = GRBnewmodel(env, model_p, "lp", 0, C_NULL, C_NULL, C_NULL, C_NULL, C_NULL)
+  model = model_p[]
+  
+end
+
+
 
 using Gurobi
 ENV["JULIA_NUM_THREADS"]
