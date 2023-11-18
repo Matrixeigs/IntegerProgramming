@@ -76,13 +76,13 @@ function mixed_integer_linear_programming(cobj::Vector, A::Matrix, b::Vector, lb
     GRBgetintattr(model, "NumConstrs", NumConstrs) # sum of (dual) constraint violations
     GRBgetintattr(model, "BarIterCount", BarIterCount) # sum of (dual) constraint violations
 
-    error = GRBgetintattr(model, GRB_INT_ATTR_STATUS, optimstatus)
-    error = GRBgetdblattr(model, GRB_DBL_ATTR_OBJVAL, objval)
-    error = GRBgetdblattrarray(model, GRB_DBL_ATTR_X, 0, 2, sol)
+    error = GRBgetintattr(model, GRB_INT_ATTR_STATUS, optimstatus);
+    error = GRBgetdblattr(model, GRB_DBL_ATTR_OBJVAL, objval);
+    error = GRBgetdblattrarray(model, GRB_DBL_ATTR_X, 0, NumVars, sol);
 
     GRBfreemodel(model)
     GRBfreeenv(env)
-    
+    sol = Dict("x" => sol, "objval" => objval[])
     return sol
 end
 
@@ -100,4 +100,5 @@ vtype = [GRB_BINARY, GRB_BINARY, GRB_BINARY]
 A = [1.0 2.0 3.0; -1.0 -1.0 0.0]
 b = [4.0; -1.0]
 
-x = mixed_integer_linear_programming(cobj, A, b, lb, ub, vtype, "max")
+result = mixed_integer_linear_programming(cobj, A, b, lb, ub, vtype, "max")
+print(result)
