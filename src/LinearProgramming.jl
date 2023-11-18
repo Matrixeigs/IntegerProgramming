@@ -1,152 +1,110 @@
 #=
-minimize    x^2 + x*y + y^2 + y*z + z^2 + 2 x
-subject to  x + 2 y + 3 z >= 4
-            x +   y       >= 1
-            x, y, z non-negative
+    Use the gurobi with low level api to solve linear programming problems 
+    
+    The standard format is:
+
+    \min_{x} c'*x
+    s.t. A*x <= b
+         lb <= x <= ub
 =#
 
-function linear_programming(c::Vector, A::Matrix, b::Vector, lb::Vector, ub::Vector)
-    # A linear programming wrapper to call Gurobi
+using Gurobi
+
+function linear_programming(cobj::Vector, A::Matrix, b::Vector, lb::Vector, ub::Vector, model_sense::String)
+    # 0: initialize model with parameters settings
     env_p = Ref{Ptr{Cvoid}}()
-    error = GRBloadenv(env_p, "lp.log")
+    error = GRBloadenv(env_p, "")
     env = env_p[]
+
+    GRBsetparam(env, "OutputFlag", "0") # Update environment parameters
     model_p = Ref{Ptr{Cvoid}}()
-    error = GRBnewmodel(env, model_p, "lp", 0, C_NULL, C_NULL, C_NULL, C_NULL, C_NULL)
+    error = GRBnewmodel(env, model_p, "milp", 0, C_NULL, C_NULL, C_NULL, C_NULL, C_NULL)
     model = model_p[]
+
+    # 1:  add variables
+    NumVars = Ref{Cint}()
+    NumConstrs = Ref{Cint}()
+    (NumConstrs, NumVars) = size(A)
+    error = GRBaddvars(
+        model, # model
+        NumVars,      # : numvars
+        0,      # : numnz
+        C_NULL, # : *vbeg
+        C_NULL, # : *vind
+        C_NULL, # : *vval
+        cobj,   # : *obj
+        lb,    # : *lb
+        ub,    # : *ub
+        C_NULL, # : *vtype
+        C_NULL   # : **varnames
+        )
+    # 2:  add constraints
+    for i in 1 : NumConstrs
+        nonzero_indices = findall(!iszero, A[i,:])
+        numnz = length(nonzero_indices)
+        val = zeros(numnz)
+        for j in 1:numnz
+            val[j] = A[i, nonzero_indices[j]]
+        end
+        error = GRBaddconstr(
+            model,   # : *model
+            numnz,       # : numnz
+            nonzero_indices,   # : *cind
+            val,   # : *cval
+            GRB_LESS_EQUAL, # : sense
+            b[i],   # : rhs
+            C_NULL,    # : *constrname
+            )
+    end
+    # 3: update model parameters
+    if cmp(model_sense, "min") == 0
+        error = GRBsetintattr(model, "ModelSense", GRB_MINIMIZE)
+    else
+        error = GRBsetintattr(model, "ModelSense", GRB_MAXIMIZE)
+    end
+    # error = GRBsetintparam(model, "OutputFlag", 0)
+    # error = GRBsetintparam(model, "OutputFlag", 0)
+    error = GRBoptimize(model)
+    # error = GRBwrite(model, "lp.lp");
+
+    pinfeas = Ref{Cdouble}()
+    dinfeas = Ref{Cdouble}()
+    relgap = Ref{Cdouble}()
+
+    # 4: obtain results
+    optimstatus = Ref{Cint}() # barrier iters
+    objval = Ref{Cdouble}() # barrier iters
+    runtime = Ref{Cdouble}() # running time
+    mip_gap = Ref{Cdouble}() # mixed integer gap
+    sol = ones(NumVars)
+
+    GRBgetdblattr(model, "ConstrVio", pinfeas) # maximum (primal) constraint violation
+    GRBgetdblattr(model, "MaxVio", dinfeas) # sum of (dual) constraint violations
+    GRBgetdblattr(model, "ComplVio", relgap) # complementarity violation
     
-  end
-  
-  
-  
-  using Gurobi
-  ENV["JULIA_NUM_THREADS"]
-  # initialize model
-  env_p = Ref{Ptr{Cvoid}}()
-  error = GRBloadenv(env_p, "qp.log")
-  env = env_p[]
-  model_p = Ref{Ptr{Cvoid}}()
-  error = GRBnewmodel(env, model_p, "qp", 0, C_NULL, C_NULL, C_NULL, C_NULL, C_NULL)
-  model = model_p[]
-  
-  # variables bounds
-  vlb = Cdouble[-Inf, -Inf, -Inf]
-  vub = Cdouble[+Inf, +Inf, +Inf]
-  
-  # linear objective coeffs
-  cobj = Cdouble[2.0, 0.0, 0.0]
-  
-  # quadratic objective coeffs
-  qrow = Cint[0, 0, 1, 1, 2]
-  qcol = Cint[0, 1, 1, 2, 2]
-  qval = Cdouble[1, 1, 1, 1, 1]
-  
-  # linear constraint1 coeffs
-  c1ind = Cint[0, 1, 2]
-  c1val = Cdouble[1.0, 2.0, 3.0]
-  c1sense = GRB_GREATER_EQUAL
-  c1rhs = 4.0
-  
-  # linear constraint2 coeffs
-  c2ind = Cint[0, 1]
-  c2val = Cdouble[1.0, 1.0]
-  c2sense = GRB_GREATER_EQUAL
-  c2rhs = 1.0
-  
-  # linear constraint3 coeffs: nonnegativity
-  c3xind = Cint[0]
-  c3xval = Cdouble[1.0]
-  c3xsense = GRB_GREATER_EQUAL
-  c3xrhs = 0.0
-  c3yind = Cint[1]
-  c3yval = Cdouble[1.0]
-  c3ysense = GRB_GREATER_EQUAL
-  c3yrhs = 0.0
-  c3zind = Cint[2]
-  c3zval = Cdouble[1.0]
-  c3zsense = GRB_GREATER_EQUAL
-  c3zrhs = 0.0
-  c3ind = [c3xind, c3yind, c3zind]
-  c3val = [c3xval, c3yval, c3zval]
-  c3sense = [c3xsense, c3ysense, c3zsense]
-  c3rhs = [c3xrhs, c3yrhs, c3zrhs]
-  
-  # variables and objective
-  vname = []
-  vname = append!(vname,["xyz"])
-  error = GRBaddvars(
-    model, # model
-    3,      # : numvars
-    0,      # : numnz
-    C_NULL, # : *vbeg
-    C_NULL, # : *vind
-    C_NULL, # : *vval
-    cobj,   # : *obj
-    vlb,    # : *lb
-    vub,    # : *ub
-    C_NULL, # : *vtype
-    # "xyz" # : **varnames
-    ["xyz"]   # : **varnames
-    # Cuchar["xyz"]   # : **varnames
-    # Base.unsafe_convert(Cstring,"xyz")
-    # Base.cconvert(Cstring,"xyz")
-  )
-  error = GRBaddqpterms(model, 5, qrow, qcol, qval)
-  
-  # constraint1
-  error = GRBaddconstr(
-    model,   # : *model
-    3,       # : numnz
-    c1ind,   # : *cind
-    c1val,   # : *cval
-    c1sense, # : sense
-    c1rhs,   # : rhs
-    "c1",    # : *constrname
-  )
-  
-  # constraint2
-  error = GRBaddconstr(
-    model,   # : *model
-    2,       # : numnz
-    c2ind,   # : *cind
-    c2val,   # : *cval
-    c2sense, # : sense
-    c2rhs,   # : rhs
-    "c2",    # : *constrname
-  )
-  
-  # constraint3: nonnegativity
-  for i in 1:3
-    error = GRBaddconstr(
-      model,   # : *model
-      1,       # : numnz
-      c3ind[i],   # : *cind
-      c3val[i],   # : *cval
-      c3sense[i], # : sense
-      c3rhs[i],   # : rhs
-      "c3_$i",    # : *constrname
-    )
-  end
-  error = GRBoptimize(model)
-  error = GRBwrite(model, "qp.lp");
-  
-  pinfeas = Ref{Cdouble}()
-  dinfeas = Ref{Cdouble}()
-  relgap = Ref{Cdouble}()
-  NumVars = Ref{Cint}()
-  NumConstrs = Ref{Cint}()
-  IterCount = Ref{Cint}() # simplex iters
-  BarIterCount = Ref{Cint}() # barrier iters
-  optimstatus = Ref{Cint}() # barrier iters
-  objval = Ref{Cdouble}() # barrier iters
-  sol = ones(3)
-  
-  GRBgetdblattr(model, "ConstrVio", pinfeas) # maximum (primal) constraint violation
-  GRBgetdblattr(model, "MaxVio", dinfeas) # sum of (dual) constraint violations
-  GRBgetdblattr(model, "ComplVio", relgap) # complementarity violation
-  GRBgetintattr(model, "NumVars", NumVars) # sum of (dual) constraint violations
-  GRBgetintattr(model, "NumConstrs", NumConstrs) # sum of (dual) constraint violations
-  GRBgetintattr(model, "BarIterCount", BarIterCount) # sum of (dual) constraint violations
-  
-  error = GRBgetintattr(model, GRB_INT_ATTR_STATUS, optimstatus);
-  error = GRBgetdblattr(model, GRB_DBL_ATTR_OBJVAL, objval);
-  error = GRBgetdblattrarray(model, GRB_DBL_ATTR_X, 0, 3, sol);
+    error = GRBgetdblattr(model, GRB_DBL_ATTR_RUNTIME, runtime);
+    error = GRBgetintattr(model, GRB_INT_ATTR_STATUS, optimstatus);
+    error = GRBgetdblattr(model, GRB_DBL_ATTR_OBJVAL, objval);
+    error = GRBgetdblattrarray(model, GRB_DBL_ATTR_X, 0, NumVars, sol);
+
+    GRBfreemodel(model)
+    GRBfreeenv(env)
+    sol = Dict("x" => sol, "objval" => objval[], "runtime" => runtime[])
+    return sol
+end
+
+# lb = [0.0, 0.0]
+# ub = [Inf, Inf]
+# cobj = [1.0, 1.0]
+# vtype = [GRB_INTEGER, GRB_INTEGER]
+# A = [2.0 -2.0; -8.0 10.0]
+# b = [-1.0; 13.0]
+
+lb = [0.0, 0.0, 0.0]
+ub = [1.0, 1.0, 1.0]
+cobj = [1.0, 1.0, 2.0]
+A = [1.0 2.0 3.0; -1.0 -1.0 0.0]
+b = [4.0; -1.0]
+
+result = @time linear_programming(cobj, A, b, lb, ub, "max")
+print(result)

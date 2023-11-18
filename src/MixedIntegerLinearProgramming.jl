@@ -14,7 +14,7 @@ using Gurobi
 function mixed_integer_linear_programming(cobj::Vector, A::Matrix, b::Vector, lb::Vector, ub::Vector, vtype::Vector, model_sense::String)
     # 0: initialize model with parameters settings
     env_p = Ref{Ptr{Cvoid}}()
-    error = GRBloadenv(env_p, "lp.log")
+    error = GRBloadenv(env_p, "")
     env = env_p[]
 
     GRBsetparam(env, "OutputFlag", "0") # Update environment parameters
