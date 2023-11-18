@@ -1,11 +1,11 @@
-\ Model lp
+\ Model milp
 \ LP format - for model browsing. Use MPS format to capture full model detail.
 Minimize
-  - xy - C1
+  - C0 - C1
 Subject To
- R0: - 2 xy + 2 C1 <= -1
- R1: 10 xy - 8 C1 <= 13
+ R0: - 2 C0 + 2 C1 <= -1
+ R1: 10 C0 - 8 C1 <= 13
 Bounds
 Generals
- xy C1
+ C0 C1
 End
