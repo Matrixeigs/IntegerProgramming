@@ -72,9 +72,7 @@ function mixed_integer_linear_programming(cobj::Vector, A::Matrix, b::Vector, lb
     GRBgetdblattr(model, "ConstrVio", pinfeas) # maximum (primal) constraint violation
     GRBgetdblattr(model, "MaxVio", dinfeas) # sum of (dual) constraint violations
     GRBgetdblattr(model, "ComplVio", relgap) # complementarity violation
-    GRBgetintattr(model, "NumVars", NumVars) # sum of (dual) constraint violations
-    GRBgetintattr(model, "NumConstrs", NumConstrs) # sum of (dual) constraint violations
-    GRBgetintattr(model, "BarIterCount", BarIterCount) # sum of (dual) constraint violations
+
 
     error = GRBgetintattr(model, GRB_INT_ATTR_STATUS, optimstatus);
     error = GRBgetdblattr(model, GRB_DBL_ATTR_OBJVAL, objval);
