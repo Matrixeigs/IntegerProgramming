@@ -12,7 +12,7 @@
 using Gurobi
 
 function mixed_integer_linear_programming(cobj::Vector, A::Matrix, b::Vector, lb::Vector, ub::Vector, vtype::Vector, model_sense::String)
-    # 0: initialize model
+    # 0: initialize model with parameters settings
     env_p = Ref{Ptr{Cvoid}}()
     error = GRBloadenv(env_p, "lp.log")
     env = env_p[]
@@ -78,20 +78,23 @@ function mixed_integer_linear_programming(cobj::Vector, A::Matrix, b::Vector, lb
     BarIterCount = Ref{Cint}() # barrier iters
     optimstatus = Ref{Cint}() # barrier iters
     objval = Ref{Cdouble}() # barrier iters
+    runtime = Ref{Cdouble}() # running time
+    mip_gap = Ref{Cdouble}() # mixed integer gap
     sol = ones(NumVars)
 
     GRBgetdblattr(model, "ConstrVio", pinfeas) # maximum (primal) constraint violation
     GRBgetdblattr(model, "MaxVio", dinfeas) # sum of (dual) constraint violations
     GRBgetdblattr(model, "ComplVio", relgap) # complementarity violation
-
-
+    
+    error = GRBgetdblattr(model, GRB_DBL_ATTR_MIPGAP, mip_gap);
+    error = GRBgetdblattr(model, GRB_DBL_ATTR_RUNTIME, runtime);
     error = GRBgetintattr(model, GRB_INT_ATTR_STATUS, optimstatus);
     error = GRBgetdblattr(model, GRB_DBL_ATTR_OBJVAL, objval);
     error = GRBgetdblattrarray(model, GRB_DBL_ATTR_X, 0, NumVars, sol);
 
     GRBfreemodel(model)
     GRBfreeenv(env)
-    sol = Dict("x" => sol, "objval" => objval[])
+    sol = Dict("x" => sol, "objval" => objval[], "runtime" => runtime[], "mip_gap" => mip_gap[])
     return sol
 end
 
@@ -109,5 +112,5 @@ vtype = [GRB_BINARY, GRB_BINARY, GRB_BINARY]
 A = [1.0 2.0 3.0; -1.0 -1.0 0.0]
 b = [4.0; -1.0]
 
-result = mixed_integer_linear_programming(cobj, A, b, lb, ub, vtype, "max")
+result = @time mixed_integer_linear_programming(cobj, A, b, lb, ub, vtype, "max")
 print(result)
