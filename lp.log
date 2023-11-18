@@ -1,5 +1,5 @@
 
-Gurobi 10.0.3 (mac64[arm]) logging started Sat Nov 18 21:18:46 2023
+Gurobi 10.0.3 (mac64[arm]) logging started Sat Nov 18 22:02:54 2023
 
 Set parameter Username
 Academic license - for non-commercial use only - expires 2024-10-25
@@ -8,53 +8,283 @@ Gurobi Optimizer version 10.0.3 build v10.0.3rc0 (mac64[arm])
 CPU model: Apple M1 Max
 Thread count: 10 physical cores, 10 logical processors, using up to 10 threads
 
-Optimize a model with 2 rows, 2 columns and 4 nonzeros
-Model fingerprint: 0x3c72a20a
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Model fingerprint: 0x98045aeb
+Variable types: 0 continuous, 3 integer (3 binary)
 Coefficient statistics:
-  Matrix range     [2e+00, 1e+01]
-  Objective range  [1e+00, 1e+00]
-  Bounds range     [0e+00, 0e+00]
-  RHS range        [1e+00, 1e+01]
-Presolve removed 2 rows and 2 columns
-Presolve time: 0.00s
-Presolve: All rows and columns removed
-Iteration    Objective       Primal Inf.    Dual Inf.      Time
-       0   -8.5000000e+00   0.000000e+00   0.000000e+00      0s
-
-Solved in 0 iterations and 0.00 seconds (0.00 work units)
-Optimal objective -8.500000000e+00
-
-Gurobi 10.0.3 (mac64[arm]) logging started Sat Nov 18 21:19:27 2023
-
-Set parameter Username
-Academic license - for non-commercial use only - expires 2024-10-25
-
-Gurobi 10.0.3 (mac64[arm]) logging started Sat Nov 18 21:19:53 2023
-
-Set parameter Username
-Academic license - for non-commercial use only - expires 2024-10-25
-Gurobi Optimizer version 10.0.3 build v10.0.3rc0 (mac64[arm])
-
-CPU model: Apple M1 Max
-Thread count: 10 physical cores, 10 logical processors, using up to 10 threads
-
-Optimize a model with 2 rows, 2 columns and 4 nonzeros
-Model fingerprint: 0x3c755c4a
-Variable types: 0 continuous, 2 integer (0 binary)
-Coefficient statistics:
-  Matrix range     [2e+00, 1e+01]
-  Objective range  [1e+00, 1e+00]
-  Bounds range     [0e+00, 0e+00]
-  RHS range        [1e+00, 1e+01]
-Presolve removed 2 rows and 2 columns
+  Matrix range     [1e+00, 3e+00]
+  Objective range  [1e+00, 2e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 4e+00]
+Found heuristic solution: objective 2.0000000
+Presolve removed 2 rows and 3 columns
 Presolve time: 0.00s
 Presolve: All rows and columns removed
 
 Explored 0 nodes (0 simplex iterations) in 0.00 seconds (0.00 work units)
 Thread count was 1 (of 10 available processors)
 
-Solution count 1: -3 
-No other solutions better than -3
+Solution count 2: 3 2 
 
 Optimal solution found (tolerance 1.00e-04)
-Best objective -3.000000000000e+00, best bound -3.000000000000e+00, gap 0.0000%
+Best objective 3.000000000000e+00, best bound 3.000000000000e+00, gap 0.0000%
+
+Gurobi 10.0.3 (mac64[arm]) logging started Sat Nov 18 22:03:12 2023
+
+Set parameter Username
+Academic license - for non-commercial use only - expires 2024-10-25
+Gurobi Optimizer version 10.0.3 build v10.0.3rc0 (mac64[arm])
+
+CPU model: Apple M1 Max
+Thread count: 10 physical cores, 10 logical processors, using up to 10 threads
+
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Model fingerprint: 0x98045aeb
+Variable types: 0 continuous, 3 integer (3 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 3e+00]
+  Objective range  [1e+00, 2e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 4e+00]
+Found heuristic solution: objective 2.0000000
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+Presolve: All rows and columns removed
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds (0.00 work units)
+Thread count was 1 (of 10 available processors)
+
+Solution count 2: 3 2 
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 3.000000000000e+00, best bound 3.000000000000e+00, gap 0.0000%
+
+Gurobi 10.0.3 (mac64[arm]) logging started Sat Nov 18 22:06:00 2023
+
+Set parameter Username
+Academic license - for non-commercial use only - expires 2024-10-25
+Gurobi Optimizer version 10.0.3 build v10.0.3rc0 (mac64[arm])
+
+CPU model: Apple M1 Max
+Thread count: 10 physical cores, 10 logical processors, using up to 10 threads
+
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Model fingerprint: 0x98045aeb
+Variable types: 0 continuous, 3 integer (3 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 3e+00]
+  Objective range  [1e+00, 2e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 4e+00]
+Found heuristic solution: objective 2.0000000
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+Presolve: All rows and columns removed
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds (0.00 work units)
+Thread count was 1 (of 10 available processors)
+
+Solution count 2: 3 2 
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 3.000000000000e+00, best bound 3.000000000000e+00, gap 0.0000%
+
+Gurobi 10.0.3 (mac64[arm]) logging started Sat Nov 18 22:06:21 2023
+
+Set parameter Username
+Academic license - for non-commercial use only - expires 2024-10-25
+Gurobi Optimizer version 10.0.3 build v10.0.3rc0 (mac64[arm])
+
+CPU model: Apple M1 Max
+Thread count: 10 physical cores, 10 logical processors, using up to 10 threads
+
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Model fingerprint: 0x98045aeb
+Variable types: 0 continuous, 3 integer (3 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 3e+00]
+  Objective range  [1e+00, 2e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 4e+00]
+Found heuristic solution: objective 2.0000000
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+Presolve: All rows and columns removed
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds (0.00 work units)
+Thread count was 1 (of 10 available processors)
+
+Solution count 2: 3 2 
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 3.000000000000e+00, best bound 3.000000000000e+00, gap 0.0000%
+
+Gurobi 10.0.3 (mac64[arm]) logging started Sat Nov 18 22:06:26 2023
+
+Set parameter Username
+Academic license - for non-commercial use only - expires 2024-10-25
+Gurobi Optimizer version 10.0.3 build v10.0.3rc0 (mac64[arm])
+
+CPU model: Apple M1 Max
+Thread count: 10 physical cores, 10 logical processors, using up to 10 threads
+
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Model fingerprint: 0x98045aeb
+Variable types: 0 continuous, 3 integer (3 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 3e+00]
+  Objective range  [1e+00, 2e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 4e+00]
+Found heuristic solution: objective 2.0000000
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+Presolve: All rows and columns removed
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds (0.00 work units)
+Thread count was 1 (of 10 available processors)
+
+Solution count 2: 3 2 
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 3.000000000000e+00, best bound 3.000000000000e+00, gap 0.0000%
+
+Gurobi 10.0.3 (mac64[arm]) logging started Sat Nov 18 22:06:34 2023
+
+Set parameter Username
+Academic license - for non-commercial use only - expires 2024-10-25
+Gurobi Optimizer version 10.0.3 build v10.0.3rc0 (mac64[arm])
+
+CPU model: Apple M1 Max
+Thread count: 10 physical cores, 10 logical processors, using up to 10 threads
+
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Model fingerprint: 0x98045aeb
+Variable types: 0 continuous, 3 integer (3 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 3e+00]
+  Objective range  [1e+00, 2e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 4e+00]
+Found heuristic solution: objective 2.0000000
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+Presolve: All rows and columns removed
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds (0.00 work units)
+Thread count was 1 (of 10 available processors)
+
+Solution count 2: 3 2 
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 3.000000000000e+00, best bound 3.000000000000e+00, gap 0.0000%
+
+Gurobi 10.0.3 (mac64[arm]) logging started Sat Nov 18 22:06:38 2023
+
+Set parameter Username
+Academic license - for non-commercial use only - expires 2024-10-25
+
+Gurobi 10.0.3 (mac64[arm]) logging started Sat Nov 18 22:06:54 2023
+
+Set parameter Username
+Academic license - for non-commercial use only - expires 2024-10-25
+Gurobi Optimizer version 10.0.3 build v10.0.3rc0 (mac64[arm])
+
+CPU model: Apple M1 Max
+Thread count: 10 physical cores, 10 logical processors, using up to 10 threads
+
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Model fingerprint: 0x98045aeb
+Variable types: 0 continuous, 3 integer (3 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 3e+00]
+  Objective range  [1e+00, 2e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 4e+00]
+Found heuristic solution: objective 2.0000000
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+Presolve: All rows and columns removed
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds (0.00 work units)
+Thread count was 1 (of 10 available processors)
+
+Solution count 2: 3 2 
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 3.000000000000e+00, best bound 3.000000000000e+00, gap 0.0000%
+
+Gurobi 10.0.3 (mac64[arm]) logging started Sat Nov 18 22:09:37 2023
+
+Set parameter Username
+Academic license - for non-commercial use only - expires 2024-10-25
+
+Gurobi 10.0.3 (mac64[arm]) logging started Sat Nov 18 22:09:50 2023
+
+Set parameter Username
+Academic license - for non-commercial use only - expires 2024-10-25
+Gurobi Optimizer version 10.0.3 build v10.0.3rc0 (mac64[arm])
+
+CPU model: Apple M1 Max
+Thread count: 10 physical cores, 10 logical processors, using up to 10 threads
+
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Model fingerprint: 0x98045aeb
+Variable types: 0 continuous, 3 integer (3 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 3e+00]
+  Objective range  [1e+00, 2e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 4e+00]
+Found heuristic solution: objective 2.0000000
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+Presolve: All rows and columns removed
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds (0.00 work units)
+Thread count was 1 (of 10 available processors)
+
+Solution count 2: 3 2 
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 3.000000000000e+00, best bound 3.000000000000e+00, gap 0.0000%
+
+Gurobi 10.0.3 (mac64[arm]) logging started Sat Nov 18 22:10:20 2023
+
+Set parameter Username
+Academic license - for non-commercial use only - expires 2024-10-25
+Gurobi Optimizer version 10.0.3 build v10.0.3rc0 (mac64[arm])
+
+CPU model: Apple M1 Max
+Thread count: 10 physical cores, 10 logical processors, using up to 10 threads
+
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Model fingerprint: 0x98045aeb
+Variable types: 0 continuous, 3 integer (3 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 3e+00]
+  Objective range  [1e+00, 2e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 4e+00]
+Found heuristic solution: objective 2.0000000
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+Presolve: All rows and columns removed
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds (0.00 work units)
+Thread count was 1 (of 10 available processors)
+
+Solution count 2: 3 2 
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 3.000000000000e+00, best bound 3.000000000000e+00, gap 0.0000%
+
+Gurobi 10.0.3 (mac64[arm]) logging started Sat Nov 18 22:11:31 2023
+
+Set parameter Username
+Academic license - for non-commercial use only - expires 2024-10-25
+
+Gurobi 10.0.3 (mac64[arm]) logging started Sat Nov 18 22:11:59 2023
+
+Set parameter Username
+Academic license - for non-commercial use only - expires 2024-10-25
