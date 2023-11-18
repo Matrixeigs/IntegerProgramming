@@ -1,3 +1,14 @@
+#=
+    Use the gurobi with low level api to solve mixed integer linear programming problems 
+    
+    The standard format is:
+
+    \min_{x} c'*x
+    s.t. A*x <= b
+         lb <= x <= ub
+         x_{i} \in J
+=#
+
 using Gurobi
 
 function mixed_integer_linear_programming(cobj::Vector, A::Matrix, b::Vector, lb::Vector, ub::Vector, vtype::Vector, model_sense::String)
