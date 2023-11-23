@@ -35,7 +35,7 @@ function branch_and_bound(cobj::Vector, A::Matrix, b::Vector, lb::Vector, ub::Ve
     queue = [root_node]
     while length(queue)>0 # The queue is not empty
         if f_opt > -Inf # A feasible solution is derived.
-
+            
         end
     end
     print(root_node)
