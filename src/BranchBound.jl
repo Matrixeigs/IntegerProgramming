@@ -35,7 +35,9 @@ function branch_and_bound(cobj::Vector, A::Matrix, b::Vector, lb::Vector, ub::Ve
     queue = [root_node]
     while length(queue)>0 # The queue is not empty
         if f_opt > -Inf # A feasible solution is derived.
-            
+            (~,index) = queue_management(queue, "bound")
+        else 
+            (~,index) = queue_management(queue, "feasibility")
         end
     end
     print(root_node)
@@ -67,6 +69,44 @@ function integerity_feasibility(x::Vector, vtype::Vector, integerity_tol::Float1
     end
 
     return xfrac
+end
+
+function queue_management(queue::Vector, key_to_check::String, sense::String)
+    if sense == "max"
+        max_index = 0
+        max_value = nothing
+    
+        # Iterate through the vector to find the maximum index according to the key
+        for (index, dict) in enumerate(queue)
+            if haskey(dict, key_to_check)
+                current_value = dict[key_to_check]
+                if max_value === nothing || current_value >= max_value
+                    max_value = current_value
+                    max_index = index
+                end
+            end
+        end
+
+        return max_value, max_index
+    else
+        min_index = 0
+        min_value = nothing
+    
+        # Iterate through the vector to find the maximum index according to the key
+        for (index, dict) in enumerate(queue)
+            if haskey(dict, key_to_check)
+                current_value = dict[key_to_check]
+                if min_value === nothing || current_value <= min_value
+                    min_value = current_value
+                    min_index = index
+                end
+            end
+        end
+
+        return min_value, min_index
+    end
+
+
 end
 
 
