@@ -7,9 +7,9 @@ truth = [xor(col[1]>0.5, col[2]>0.5) for col in eachcol(noisy)]   # 1000-element
 
 # Define our model, a multi-layer perceptron with one hidden layer of size 3:
 model = Chain(
-    Dense(2 => 3, tanh),   # activation function inside layer
-    BatchNorm(3),
-    Dense(3 => 2),
+    Dense(2 => 5, relu),   # activation function inside layer
+    BatchNorm(5),
+    Dense(5 => 2),
     softmax) |> gpu        # move model to GPU, if available
 
 # The model encapsulates parameters, randomly initialised. Its initial output is:
@@ -24,7 +24,7 @@ optim = Flux.setup(Flux.Adam(0.01), model)  # will store optimiser momentum, etc
 
 # Training loop, using the whole data set 1000 times:
 losses = []
-@showprogress for epoch in 1:1_000
+@showprogress for epoch in 1:1_00
     for (x, y) in loader
         loss, grads = Flux.withgradient(model) do m
             # Evaluate model and loss inside gradient context:
